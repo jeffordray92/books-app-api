@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound
 
 from book.models import Book, Todo
@@ -10,6 +11,7 @@ from book.serializers import BookSerializer, TodoSerializer
 
 
 class BookSearchView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         search_query = request.query_params.get('q', '')
@@ -26,6 +28,7 @@ class BookSearchView(APIView):
 
 
 class TodoListCreateView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         todos = Todo.objects.all()
@@ -50,4 +53,3 @@ class TodoListCreateView(APIView):
         serializer = TodoSerializer(todo)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
