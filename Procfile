@@ -1,1 +1,1 @@
-web: gunicorn books_app_api.wsgi --log-file -
+web: python manage.py migrate && gunicorn books_app_api.wsgi --log-file -
